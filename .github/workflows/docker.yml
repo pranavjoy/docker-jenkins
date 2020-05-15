@@ -1,0 +1,27 @@
+name: Dockero
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Copy Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: example1
+        path: example1
+
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        repository: pranavjoy/docker-jenkins
+        tags: latest 
